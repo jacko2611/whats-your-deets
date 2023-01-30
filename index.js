@@ -1,26 +1,29 @@
 const inquirer = require('inquirer');
-const fs = require ('fs');
+const fs = require('fs');
+const generateHtml = require('./src/generateHtml');
+
+const answers = [];
 
 const questions = [
     {
         type: 'input',
+        name: 'name',
         message: `What is the team manager's name?`,
-        name: 'title',
     },
     {
         type: 'input',
-        message: `What is the team manager's ID?`,
         name: 'id',
+        message: `What is the team manager's ID?`,
     },
     {
         type: 'input',
-        message: `What is the team manager's email?`,
-        name: 'email'
+        name: 'email',
+        message: `What is the team manager's email?`
     },
     {
         type: 'input',
-        message: `What is the team manager's office number?`,
-        name: 'number'
+        name: 'number',
+        message: `What is the team manager's office number?`
     },
     {
         type: `list`,
@@ -33,6 +36,10 @@ const questions = [
 
 function init() {
     inquirer.prompt(questions)
+    .then(function(data) {
+        writeToFile("Team.html" , generateHtml(data));
+        console.log(data);
+    })
   
 }
 
