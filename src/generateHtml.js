@@ -1,28 +1,55 @@
-const generateCard = () => {
-    `
 
-<div class="col">
-    <div class="card .h-100" style="width: 18rem;">
-        <div class="card-header bg-info">
-            <h5 class="card-title">${name}</h5>
-            <h6 class="card-subtitle bi ${role}">${role}</h6>
-        </div>
-        <ul class="list-group p-2">
-            <li class="list-group-item">An item</li>
-            <li class="list-group-item"><a href = "mailto: ${email}">${email}</a></li>
-            <li class="list-group-item">${roleSpecific}</li>
-        </ul>
-    </div>
-</div>
-    `
+function cards (myTeam) {
+
+    
+    return myTeam.map((member) => {
+        const name = member.getName()
+        const id = member.getId()
+        const email = member.getEmail()
+        const role = member.getRole()
+
+        return `<div class="col">
+            <div class="card .h-100" style="width: 18rem;">
+                <div class="card-header bg-info">
+                    <h5 class="card-title">${name}</h5>
+                    <h6 class="card-subtitle bi ${role.toLowerCase()}"> ${role}</h6>
+                </div>
+                <ul class="list-group p-2">
+                    <li class="list-group-item">ID: ${id}</li>
+                    <li class="list-group-item">Email: <a href = "mailto: ${email}">${email}</a></li>
+                    <li class="list-group-item">${roleSpecific(member)}</li>
+                </ul>
+            </div>
+        </div>`
+        }).join("");
+
 }
 
+function roleSpecific (member) {
 
-
-
-const generateHtml = function(data) {
-    return `
     
+    let result = ""
+
+    switch (member.getRole()) {
+        case "Manager":
+            result = `Office number: ${member.getOfficeNumber()}`;
+            break;
+        case "Engineer":
+            result = `GitHub: <a href="https://github.com/${member.getGitHub()}">${member.getGitHub()}</a>`
+            break;
+        case "Intern":
+            result = `School: ${member.getSchool()}`
+            break;
+        default:
+            break
+    }
+
+    return result
+}
+
+function generateHTML (myTeam) {
+
+    return `
     <!DOCTYPE html>
     <html lang="en">
     <head>
@@ -33,21 +60,20 @@ const generateHtml = function(data) {
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
         <link rel="stylesheet" href="./style.css">
-        <title>Team Mate</title>
+        <title>My Team</title>
     </head>
     <body>
         <header>
             <div id="title" class="container-fluid bg-info">
                 <h1 class="text-center text-white lh-lg">My Team</h1>
-                </div>
+              </div>
         </header>
     
         <main>
             <div class="container-fluid">
                 <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 m-auto g-4">
                     
-                    
-                    <!-- forEach loop function to generate cards -->
+                    ${cards(myTeam)}
                 
                 </div>
             </div>
@@ -58,7 +84,9 @@ const generateHtml = function(data) {
     </body>
     </html>
     `
+
 }
 
-module.exports = generateHtml;
-        
+
+
+module.exports = generateHTML

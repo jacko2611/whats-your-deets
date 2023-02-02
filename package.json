@@ -1,7 +1,6 @@
 {
   "name": "whats-your-deets",
   "version": "1.0.0",
-  "description": "",
   "main": "index.js",
   "directories": {
     "lib": "lib",
@@ -23,5 +22,7 @@
   "dependencies": {
     "fs": "^0.0.1-security",
     "inquirer": "^8.2.4"
-  }
+  },
+  "devDependencies": {},
+  "description": ""
 }
